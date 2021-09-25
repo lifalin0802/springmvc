@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--第一种方式： 使用默认构造函数创建对象 即 只配id和class属性！！
+    默认构造函数这个亚子： public AccountService(){...} 无args!
+<bean id="accountService" class="com.itheima.service.impl.AccountService"></bean>-->
+
+<!--第二种方式：用普通工厂的某个method 获得 src 对象 并存入spring Ioc容器
+<bean id="instanceFactory" class="com.itheima.factory.InstanceFactory"></bean>
+<bean id="accountService" factory-bean="instanceFactory" factory-method="getAccountService"></bean>-->
+<!--    使用 静态工厂方法/某个静态方法 创建对象 存入IoC容器
+<bean id="accountService" class="com.itheima.factory.StaticFactory" factory-method="getAccountService"></bean>-->
+
+<!--  scope的使用：
+    singleton：单例
+    prototype: 多例
+    request: web应用的请求范围
+    session: web应用的会话范围
+    group-session: 作用于集群环境的会话范围，非集群环境时，他就是session
+-->
+    <!--
+        单例对象：生命周期和容器相同，
+        出生：容器创建就创建了，即解析bean.xml配置文件的时候
+        销毁：容器销毁，对象就销毁
+        多例对象：
+        多例对象：生命周期和容器相同，
+        出生：调用时 被创建
+        销毁：长时间不用，且没有别的类调用，就由java垃圾回收销毁
+        多例对象：
+    -->
+    <bean id="accountService" class="com.itheima.service.impl.AccountService" scope="prototype" init-method="init" destroy-method="distroy"></bean>
+
+
+
+</beans>
